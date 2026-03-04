@@ -65,7 +65,7 @@ run_mdl() {
 			chmod +x "$mdl"
 		fi
 	else
-		eval "env $mdl_var $mdl"
+		env $mdl_var $mdl
 	fi
 	
 
