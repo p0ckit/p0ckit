@@ -17,9 +17,11 @@ cd p0ckit
 git clone https://github.com/tgrd0813/p0ckit.git
 cd p0ckit
 ```
-ps: or you can download the .zip file from [here](https://github.com/tgrd0813/p0ckit/archive/refs/heads/main.zip)
+OR 
+You can download the .zip file from [here](https://github.com/tgrd0813/p0ckit/archive/refs/heads/main.zip)
 then [go here](#windows)
 
+ps: you will not have .git folder. that means that you will not be able to update the tool using the script or in tool commands
 # Using the framework
 ## linux
 To use the framework you just need to run:
