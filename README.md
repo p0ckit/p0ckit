@@ -69,7 +69,7 @@ if you use docker you will need to run the update.py file
 Notes:
 - you won't be able to use the update/fix commands in docker since it's not persistent
 - the .py file ask if you want it to rebuild the docker container
-
+- this is to test the update.py file
 ps: the update.py file is ai generated
 
 # Modules
