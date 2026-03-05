@@ -64,13 +64,12 @@ git pull origin main
 ```
 ## Windows
 if you use git bash is the same as in linux
-if you use docker you will need to run the update.py file
+if you use docker you will need to run the update.bat file
 
 Notes:
 - you won't be able to use the update/fix commands in docker since it's not persistent
-- the .py file ask if you want it to rebuild the docker container
-- this is to test the update.py file
-ps: the update.py file is ai generated
+- the .bat file ask if you want it to rebuild the docker container
+ps: the update.bat file is ai generated
 
 # Modules
 Right now there is only one it's scanners/ntscan (even tho in the index file are more, those are just for tests) which just runs nmap with the ip given.
