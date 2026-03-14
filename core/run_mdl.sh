@@ -71,6 +71,16 @@ run_mdl() {
 
 }
 
+# This is to unset an option/s that are no longer needed
+unset_opt() {
+	local ukey="${1,,}"
+	if [[ -z $ukey ]]; then
+		rm $tmp_op
+	else
+		sed -i "/${ukey}/d" "$tmp_op"
+	fi		
+}
+
 # This is to set the options needed by the module/script
 set_opt() {
 	local key="${1,,}"

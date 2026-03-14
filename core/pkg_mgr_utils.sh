@@ -5,7 +5,7 @@ app_chk() {
 	
 	if [[ "$1" == "--no-test" ]]; then
 		echo "${0} runned with ${1} so not testing if apps are instaled"
-	elif [[ "$1" == "--mo-test" && -f "$tst_file" ]]; then
+	elif [[ "$1" == "--no-test" && -f "$tst_file" ]]; then
 		echo "${0} runned with ${1}, the test was already done [test file found: ${tst_file}]"
 	else
 		for app in "${apps[@]}"; do

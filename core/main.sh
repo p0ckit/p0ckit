@@ -23,9 +23,16 @@ cmd_hdlr() {
 			;;
 		set)
 			if [[ -z "$mdl" ]]; then
-				echo "you haven't selected any module/sccript"
+				echo "you haven't selected any module/script"
 			else
 				set_opt ${arg[@]}
+			fi
+			;;
+		unset)
+			if [[ -z "$mdl" ]]; then
+				echo "you haven't selected any module/script"
+			else
+				unset_opt ${arg[@]}
 			fi
 			;;
 		help) help_menu;;
