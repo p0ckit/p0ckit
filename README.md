@@ -35,9 +35,10 @@ chmod +x p0ckit.sh
 ```
 
 ## Windows/Docker
-> Note if you are serious about cybersecurity/hacking or actively using windows
-> You should really reconsider the life choices you made
-> But I still added some workarounds for you too, not my pleasure but you're welcome
+> Note if you are serious about cybersecurity/hacking or actively using windows  
+> You should really reconsider the life choices you made  
+> But I still added some workarounds for you too, not my pleasure but you're welcome  
+
 To run the framework in Windows you need to have [Docker](https://www.docker.com/products/docker-desktop/) installed.
 After you install it you can either use the GUI or the commands below
 (they are the same if you want to run the docker image in linux)
@@ -80,5 +81,5 @@ I plan to add more in the future but I will try to finish the ones it has.
 Note: in the index file are more modules used for testing
 
 # Important Notes
-> Even tho I made some workarounds for windows pls just don't use windows at least use a VM
-> VMware workstation pro is free now you have no reasons not to use linux
+> Even tho I made some workarounds for windows pls just don't use windows at least use a VM.  
+> VMware workstation pro is free now you have no reasons not to use linux.  
