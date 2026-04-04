@@ -5,4 +5,4 @@
 .histfile
 manifest.old
 .cap-files/
-wordlists/
+wordlists/*

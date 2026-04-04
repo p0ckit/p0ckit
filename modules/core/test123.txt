@@ -1,5 +1,0 @@
-/api
-/chat
-/search
-/user
-/test
