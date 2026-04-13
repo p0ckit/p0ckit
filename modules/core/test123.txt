@@ -1,0 +1,6 @@
+http://testphp.vulnweb.com
+http://hackthissite.org
+http://dvwa.co.uk
+http://www.webscantest.com
+http://crackme.cenzic.com
+http://demo.testfire.net

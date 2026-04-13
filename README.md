@@ -137,12 +137,14 @@ As the name says it's a python made web fuzzer.
 It can scan multiple url's and url endpoints.  
 It can do single as well, you can filter the status codes, specify the amount of workers and much more.  
 
-## In work
 ### sub_enum
 It's a subdomain enumeration tool made in python.  
 Same as the [web_fuzzer](#web_fuzzer) can scan single or multiple url/subdomains.  
 You can filter through the output, specify the amount of workers and a little bit more.  
 (TLDR; same as the web_fuzzer but for subdomains)
+
+## In work
+For now there are no modules in work check the project to do list
 
 ## Creating modules
 You can create your own modules in whatever language you want it only needs three things to work perfectly:  
