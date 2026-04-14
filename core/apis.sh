@@ -9,11 +9,17 @@ naas() {
             echo Ok not installing naas
         else
             git clone https://github.com/hotheadhacker/no-as-a-service.git .no-as-a-service
+            echo "Installing dependencies..."
+            cd .no-as-a-service && npm install && cd ..
         fi
     else
         if [[ "$cmd" == "start" ]]; then
             (
                 cd .no-as-a-service || exit 1
+                if [[ ! -d "node_modules" ]]; then
+                    npm install
+                fi
+
                 nohup npm start >/dev/null 2>&1 &
             ) & 
             api_pid=$!

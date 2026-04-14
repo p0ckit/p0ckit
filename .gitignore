@@ -6,3 +6,5 @@
 manifest.old
 .cap-files/
 wordlists/*
+.no-as-a-service/node_modules
+
