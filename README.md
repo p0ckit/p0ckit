@@ -182,3 +182,5 @@ do this for languages/scripts that require the variables to be set first and the
 for the cracking part of the wifi_attack module I use the [crackstation.net](https://crackstation.net) human-only wordlist.  
 as a small nice easter egg I added naas ([no-as-a-service](https://github.com/hotheadhacker/no-as-a-service)) for fun.  
 
+# Disclaimer
+This tool is made for educational and ethical hacking purposes only, I (tgrd0813) I'm not liable for misuse by the end user.  

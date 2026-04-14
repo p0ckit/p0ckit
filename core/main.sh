@@ -63,6 +63,7 @@ cmd_hdlr() {
 		search) src_mdl "${arg[@]}";;
 		update) fw_upd;;
 		fix) fw_fix;;
+        autofind) auto_find;;
 		hack|no) no_res 1;;
         mac|macchg) mac_mdl "${arg[@]}";;
         *)

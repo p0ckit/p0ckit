@@ -104,6 +104,29 @@ set_opt() {
 
 }
 
+# This is to auto find new modules/scripts added in the modules folder
+auto_find() {
+    shopt -s globstar
+
+    for fpath in ${md_path}**/*; do
+        [[ -d "$fpath" ]] && continue
+        [[ "$fpath" == "$index_path" ]] && continue
+
+        local rel_path="${fpath#*/modules/}"
+        local mdn="${fpath##*/}"
+        local entry="${mdn} ${rel_path}"
+
+        if ! grep -qFx "$entry" "$index_path"; then
+            echo "Found new module: $mdn"
+            echo "$entry" >> "$index_path"
+        else
+            echo "Module: $mdn already indexed"
+        fi
+    done
+
+    shopt -u globstar
+}
+
 # This func is to search for the specified module/script
 src_mdl() {
 	local md_name="$1"

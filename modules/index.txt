@@ -1,3 +1,5 @@
 ntscan core/ntscan
-wifi_atk core/wifi_attack
+wifi_attack core/wifi_attack
 web_fuzzer core/web_fuzzer
+sub_enum core/sub_enum
+maccng core/maccng

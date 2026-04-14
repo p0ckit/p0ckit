@@ -1,4 +1,16 @@
 #!/usr/bin/env python3
+#t first
+#str_op
+#   required:
+#       --url | --uw/--url-wordlist
+#       -s / --subdomain | -w / --wordlist
+#   optional:
+#       -d / --delay
+#       -wr / --worker
+#end_op
+#str_info
+#   this is a subdomain enumerator made in python
+#end_info
 import socket
 import argparse
 from concurrent.futures import ThreadPoolExecutor as TPL
@@ -110,7 +122,10 @@ def host_dns_resolve(host, sub=None):
 
 
 try:
-    if args.url:
+    if not args.subdomain:
+        host = host_parser(url)
+        host_dns_resolve(host)
+    elif args.url:
         host_chk_s(url, args.wordlist)
     elif args.uw:
         host_chk_m(urlw, args.wordlist)
