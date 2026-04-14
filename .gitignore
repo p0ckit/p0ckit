@@ -7,4 +7,6 @@ manifest.old
 .cap-files/
 wordlists/*
 .no-as-a-service/node_modules
+.no-as-a-service/assets/
+.no-as-a-service/README.md
 
