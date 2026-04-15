@@ -70,7 +70,7 @@ cmd_hdlr() {
 			if command -v "${cmd}" >/dev/null 2>&1; then
 				$cmd $arg
 			else
-				echo "Unknown framwork or system command: ${cmd}"
+				echo "Unknown framework or system command: ${cmd}"
 			fi
 	esac
 }
@@ -80,7 +80,7 @@ menu() {
 	[[ -f "$HISTFILE" ]] && history -r "$HISTFILE"
 	shopt -s histappend
 	while true; do
-		read -e -p "fw(${ld_md})# "  line
+		read -e -p "p0ckit(${ld_md})# "  line
 		set -- $line
 		cmd="$1"
 		shift

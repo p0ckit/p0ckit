@@ -14,5 +14,6 @@ source "$script_hm/core/banner.sh"
 banner
 naas start
 t_first_run "${1}"
+sleep 1
 no_res 0
 menu
