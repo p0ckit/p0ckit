@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+#t first
+from concurrent.futures import ThreadPoolExecutor as TPL
+import socket
+import threading
+import argparse
+
+parser = argparse.ArgumentParser(description="p0ckit port scanner")
+
+parser.add_argument("--ip", nargs="?", type=str, required=True, help="Set the ip address to scan")
+parser.add_argument("-p", "--port", nargs="*", default=["1-1024"], help="Specify the port or port range to scan")
+parser.add_argument("-t", "--timeout", nargs="?", type=int, default=2, help="Set the timeout value")
+parser.add_argument("-wr", "--workers", nargs="?", type=int, default=20, help="Set the amount of workers")
+args = parser.parse_args()
+
+plist = {
+    20: "FTP-Data",
+    21: "FTP-Control",
+    22: "SSH",
+    23: "Telnet",
+    25: "SMTP",
+    53: "DNS",
+    67: "DHCP-Server",
+    68: "DHCP-Client",
+    69: "TFTP",
+    80: "HTTP",
+    110: "POP3",
+    123: "NTP",
+    135: "RPC",
+    139: "NetBIOS",
+    143: "IMAP",
+    161: "SNMP",
+    389: "LDAP",
+    443: "HTTPS",
+    445: "SMB",
+    514: "Syslog",
+    587: "SMTP-Submission",
+    636: "LDAPS",
+    993: "IMAPS",
+    995: "POP3S",
+    1433: "MS-SQL",
+    3306: "MySQL",
+    3389: "RDP",
+    5432: "PostgreSQL",
+    5900: "VNC",
+    6379: "Redis",
+    8080: "HTTP-Proxy",
+    27017: "MongoDB"
+}
+
+ip = args.ip
+ports = args.port
+tm = args.timeout
+wr = args.workers
+
+def pr_output(cl_p, op_bn_p):
+    print(f"Scan result for {ip}")
+    if len(op_bn_p) > 0:
+        print("PORT     STATE  SERVICE")
+        for i in op_bn_p:
+            print(f"{i[0]:<9}{i[0+1]:<7}{i[0+2]}")
+        print(f"Closed ports: {len(cl_p)}")
+    else:
+        print(f"No open ports out of {len(cl_p)}")
+
+def port_parser(port):
+    portsl = []
+
+    for p in port:
+        if "-" in p:
+            start, end = map(int, p.split('-'))
+            if end > 65535:
+                end = 65535
+            portsl.extend(range(start, end + 1))
+        else:    
+            portsl.append(int(p.strip()))
+
+    return portsl
+
+def scan(ip, port):
+    if stop_event.is_set():
+        return
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(tm)
+    res = s.connect_ex((ip, port))
+    if int(res) != 0:
+        cl_port.append(port)
+    else:
+        try:
+            banner = s.recv(2024).decode(errors="ignore").strip()
+            if not banner:
+                s.send(f"HEAD / HTTP/1.1\nHOST: {ip}\r\n\r\n".encode())
+                banner = s.recv(2048).decode(errors="ignore").strip()
+
+            service = banner if banner else plist.get(port, "unknown")
+            op_bn_port.append((port, "open", service))
+        except TimeoutError:
+            service = plist.get(port, "unknown")
+            op_bn_port.append((port, "open", service))
+
+    s.close()
+
+stop_event = threading.Event()
+port = port_parser(ports)
+
+cl_port = []
+op_bn_port = []
+
+try:
+    with TPL(max_workers=wr) as execut:
+        execut.map(lambda p: scan(ip, p), port)
+
+    pr_output(cl_port, op_bn_port)
+except KeyboardInterrupt:
+    stop_event.set()
+    print("OK quitting...")
+    quit()

@@ -143,11 +143,13 @@ Same as the [web_fuzzer](#web_fuzzer) can scan single or multiple url/subdomains
 You can filter through the output, specify the amount of workers and a little bit more.  
 (TLDR; same as the web_fuzzer but for subdomains)
 
-## In work
 ### sok_scan
-It's a port scanner made in python.  
-It can scan networks/servers and output open/closed ports.  
-And it's made using only dependencies found in python3.  
+It's a port scanner made in python3.  
+It only uses built in python modules so no need for other dependencies.  
+But is still it work for now.  
+
+## In work
+For now (besides [sok_scan](###sok_scan)) there are no modules being worked on.  
 
 ## Creating modules
 You can create your own modules in whatever language you want it only needs three things to work perfectly:  

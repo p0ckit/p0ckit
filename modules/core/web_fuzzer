@@ -89,17 +89,15 @@ def url_end_chk(url, endp="/"):
         if args.filter:
             fl = args.filter
             if str(s) in fl:
-                with plk:
-                    print(f"Url: {furl} responded with code [{s}]")
-                    if args.output:    
-                        with open(out, "a") as f:
-                            f.write(f"Url: {url} responded with code [{s}]\n")
-        else:
-            with plk:
                 print(f"Url: {furl} responded with code [{s}]")
-                if args.output:
+                if args.output:    
                     with open(out, "a") as f:
-                        f.write(f"Url: {furl} responded with code [{s}]\n")
+                        f.write(f"Url: {url} responded with code [{s}]\n")
+        else:
+            print(f"Url: {furl} responded with code [{s}]")
+            if args.output:
+                with open(out, "a") as f:
+                    f.write(f"Url: {furl} responded with code [{s}]\n")
     except requests.exceptions.RequestException as e:
         with plk:
             furl = url + endp if endp else url

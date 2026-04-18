@@ -3,3 +3,4 @@ wifi_attack core/wifi_attack
 web_fuzzer core/web_fuzzer
 sub_enum core/sub_enum
 maccng core/maccng
+sok_scan core/sok_scan
