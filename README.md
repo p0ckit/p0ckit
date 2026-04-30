@@ -150,7 +150,7 @@ It can support both cidr (e.g. ip/24) and normal (e.g. 192.168.1.1-192.168.1.123
 
 ## In work
 For now there are not modules in work.  
-(I will try to make a mdoule in C to see how it goes)  
+(I will try to make a module in C to see how it goes)  
 
 ## Creating modules
 You can create your own modules in whatever language you want it only needs three things to work perfectly:  
