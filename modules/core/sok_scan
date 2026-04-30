@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 #t first
 from concurrent.futures import ThreadPoolExecutor as TPL
+import argparse
+import ipaddress
 import socket
 import threading
-import argparse
+import errno
 
 parser = argparse.ArgumentParser(description="p0ckit port scanner")
 
 parser.add_argument("--ip", nargs="?", type=str, required=True, help="Set the ip address to scan")
-parser.add_argument("-p", "--port", nargs="*", default=["1-1024"], help="Specify the port or port range to scan")
-parser.add_argument("-t", "--timeout", nargs="?", type=int, default=2, help="Set the timeout value")
+parser.add_argument("-p", "--port", nargs="+", default=["1-1024"], help="Specify the port or port range to scan")
+parser.add_argument("-t", "--timeout", nargs="?", type=int, default=1, help="Set the timeout value")
 parser.add_argument("-wr", "--workers", nargs="?", type=int, default=20, help="Set the amount of workers")
 args = parser.parse_args()
 
@@ -53,8 +55,31 @@ ports = args.port
 tm = args.timeout
 wr = args.workers
 
-def pr_output(cl_p, op_bn_p):
-    print(f"Scan result for {ip}")
+def ip_parser(ip_add):
+    ipl = []
+    if "-" in ip_add:
+        str_ip, end_ip = map(str, ip_add.split("-"))
+        if "." not in end_ip:
+            pfix = ".".join(str_ip.split(".")[:-1])
+            end_ip = f"{pfix}.{end_ip}"
+        end_ip = ipaddress.IPv4Address(end_ip)
+        str_ip = ipaddress.IPv4Address(str_ip)
+        tmp = str_ip
+        while tmp <= end_ip:
+            ipl.append(tmp)
+            tmp += 1
+    elif "/" in ip_add:
+        ipt = ipaddress.ip_network(ip_add, strict=False)
+        for ips in ipt.hosts():
+            ipl.append(ips)
+    else:
+        ipl.append(ipaddress.IPv4Address(ip_add))
+        
+    return ipl
+
+
+def pr_output(cl_p, op_bn_p, ips):
+    print(f"Scan result for {ips}")
     if len(op_bn_p) > 0:
         print("PORT     STATE  SERVICE")
         for i in op_bn_p:
@@ -77,27 +102,30 @@ def port_parser(port):
 
     return portsl
 
-def scan(ip, port):
+def scan(ips, port):
     if stop_event.is_set():
         return
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(tm)
-    res = s.connect_ex((ip, port))
-    if int(res) != 0:
+    res = s.connect_ex((str(ips), port))
+    if res in (errno.ECONNREFUSED, errno.EAGAIN):
         cl_port.append(port)
+    elif res in (errno.EHOSTDOWN, errno.EHOSTUNREACH):
+        return
     else:
         try:
-            banner = s.recv(2024).decode(errors="ignore").strip()
+            banner = s.recv(2048).decode(errors="ignore").strip()
             if not banner:
                 s.send(f"HEAD / HTTP/1.1\nHOST: {ip}\r\n\r\n".encode())
                 banner = s.recv(2048).decode(errors="ignore").strip()
-
             service = banner if banner else plist.get(port, "unknown")
             op_bn_port.append((port, "open", service))
         except TimeoutError:
-            service = plist.get(port, "unknown")
+            try:
+                service = socket.getservbyport(port)
+            except:
+                service = plist.get(port, "unknown")
             op_bn_port.append((port, "open", service))
-
     s.close()
 
 stop_event = threading.Event()
@@ -107,10 +135,14 @@ cl_port = []
 op_bn_port = []
 
 try:
-    with TPL(max_workers=wr) as execut:
-        execut.map(lambda p: scan(ip, p), port)
-
-    pr_output(cl_port, op_bn_port)
+    ipl = ip_parser(ip)
+    for ips in ipl:
+        with TPL(max_workers=wr) as execut:
+            for p in port:
+                execut.submit(scan, ips, p)
+        pr_output(cl_port, op_bn_port, ips)
+        cl_port.clear()
+        op_bn_port.clear()
 except KeyboardInterrupt:
     stop_event.set()
     print("OK quitting...")

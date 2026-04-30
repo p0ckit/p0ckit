@@ -146,10 +146,11 @@ You can filter through the output, specify the amount of workers and a little bi
 ### sok_scan
 It's a port scanner made in python3.  
 It only uses built in python modules so no need for other dependencies.  
-But is still it work for now.  
+It can support both cidr (e.g. ip/24) and normal (e.g. 192.168.1.1-192.168.1.123 or 192.168.1.1-123) ranges.  
 
 ## In work
-For now (besides [sok_scan](###sok_scan)) there are no modules being worked on.  
+For now there are not modules in work.  
+(I will try to make a mdoule in C to see how it goes)  
 
 ## Creating modules
 You can create your own modules in whatever language you want it only needs three things to work perfectly:  
