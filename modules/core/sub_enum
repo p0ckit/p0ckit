@@ -78,6 +78,7 @@ def host_chk_m(uw, wordlist=None):
             with open(uw, "r") as f:
                 for l in f:
                     url = l.strip()
+                    print(url)
                     host = host_parser(url)
                     for s in args.subdomain:
                         su = s.strip()
@@ -122,10 +123,7 @@ def host_dns_resolve(host, sub=None):
 
 
 try:
-    if not args.subdomain:
-        host = host_parser(url)
-        host_dns_resolve(host)
-    elif args.url:
+    if args.url:
         host_chk_s(url, args.wordlist)
     elif args.uw:
         host_chk_m(urlw, args.wordlist)
