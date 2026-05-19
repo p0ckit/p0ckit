@@ -9,7 +9,10 @@ import errno
 
 parser = argparse.ArgumentParser(description="p0ckit port scanner")
 
-parser.add_argument("--ip", nargs="?", type=str, required=True, help="Set the ip address to scan")
+group = parser.add_mutually_exclusive_group(required=True)
+group.add_argument("--ip", nargs="?", help="Set the ip address to scan")
+group.add_argument("-f", "--file", nargs="?", help="set the file with ip addresses to scan")
+
 parser.add_argument("-p", "--port", nargs="+", default=["1-1024"], help="Specify the port or port range to scan")
 parser.add_argument("-t", "--timeout", nargs="?", type=int, default=1, help="Set the timeout value")
 parser.add_argument("-wr", "--workers", nargs="?", type=int, default=20, help="Set the amount of workers")
@@ -54,6 +57,7 @@ ip = args.ip
 ports = args.port
 tm = args.timeout
 wr = args.workers
+fin = args.file
 
 def ip_parser(ip_add):
     ipl = []
@@ -135,14 +139,28 @@ cl_port = []
 op_bn_port = []
 
 try:
-    ipl = ip_parser(ip)
-    for ips in ipl:
-        with TPL(max_workers=wr) as execut:
-            for p in port:
-                execut.submit(scan, ips, p)
-        pr_output(cl_port, op_bn_port, ips)
-        cl_port.clear()
-        op_bn_port.clear()
+    if args.file:
+        with open(fin, "r") as f:
+            for ip in f:
+                ipd = ip.strip()
+                ipl = ip_parser(ipd)
+                for ips in ipl:
+                    with TPL(max_workers=wr) as execut:
+                        for p in port:
+                            execut.submit(scan, ips, p)
+                    pr_output(cl_port, op_bn_port, ips)
+                    cl_port.clear()
+                    op_bn_port.clear()
+
+    elif args.ip:
+        ipl = ip_parser(ip)
+        for ips in ipl:
+            with TPL(max_workers=wr) as execut:
+                for p in port:
+                    execut.submit(scan, ips, p)
+            pr_output(cl_port, op_bn_port, ips)
+            cl_port.clear()
+            op_bn_port.clear()
 except KeyboardInterrupt:
     stop_event.set()
     print("OK quitting...")

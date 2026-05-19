@@ -147,6 +147,12 @@ You can filter through the output, specify the amount of workers and a little bi
 It's a port scanner made in python3.  
 It only uses built in python modules so no need for other dependencies.  
 It can support both cidr (e.g. ip/24) and normal (e.g. 192.168.1.1-192.168.1.123 or 192.168.1.1-123) ranges.  
+Also supports scanning from a file with ip addresses.  
+
+### net_map
+It's a network mapper made in python3.
+It does a ping sweep for an ip range (e.g. /24 or /16).  
+It can write the output to a file to be used with [sok_scan](#sok_scan).  
 
 ## In work
 For now there are not modules in work.  
