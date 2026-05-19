@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(description="p0ckit network mapper")
 
 parser.add_argument("--ip", nargs="?", required=True, help="specify the ip subnet/range to map")
 parser.add_argument("-wr", "--workers", nargs="?", type=int, default=20, const=50, help="specify the amount of workers to use")
-parser.add_argument("-o", "--output", nargs="?", default="mapscan.txt", help="specify the output file")
+parser.add_argument("-o", "--output", nargs="?", const="mapscan.txt", help="specify the output file")
 args = parser.parse_args()
 
 print_lock = threading.Lock()

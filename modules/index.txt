@@ -4,3 +4,5 @@ web_fuzzer core/web_fuzzer
 sub_enum core/sub_enum
 maccng core/maccng
 sok_scan core/sok_scan
+net_map core/net_map
+test.txt core/test.txt

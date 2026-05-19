@@ -9,4 +9,4 @@ wordlists/p0ckit_wd.txt
 .no-as-a-service/node_modules
 .no-as-a-service/assets/
 .no-as-a-service/README.md
-
+modules/core/*.*
