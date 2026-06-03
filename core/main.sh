@@ -68,7 +68,7 @@ cmd_hdlr() {
         mac|macchg) mac_mdl "${arg[@]}";;
         *)
 			if command -v "${cmd}" >/dev/null 2>&1; then
-				$cmd $arg
+				$cmd ${arg[@]}
 			else
 				echo "Unknown framework or system command: ${cmd}"
 			fi
