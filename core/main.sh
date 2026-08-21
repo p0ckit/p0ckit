@@ -154,8 +154,8 @@ help_menu() {
 		echo "	crtmnfst -- Create manifest manually (sorry for the weird command)"
 		echo "	update -- Update the tool to the latest release"
 		echo "	search -- Search a module/script by name or path"
-        echo "  autofind -- Find and index new scritps/modules automatically"
-        echo "  macchg/mac -- Changes the mac address of the specified interface"
+ 	        echo "  autofind -- Find and index new scritps/modules automatically"
+        	echo "  macchg/mac -- Changes the mac address of the specified interface"
 		echo "	exit/quit/q -- to quit the script"
 	else
 		echo "Help menu:"
@@ -165,7 +165,7 @@ help_menu() {
 		echo "	use -- Use a module/script (modules by name | scritps by path)"
 		echo "	fix -- Fix the tool if something is broken (if you have made chages to the tool they will not be saved)"
 		echo "	search -- Search a module/script by name or path"
-        echo "  macchg/mac -- Chages the mac address of the specified interface"
+        	echo "  macchg/mac -- Chages the mac address of the specified interface"
 		echo "	exit/quit/q -- to quit the script"
 	fi
 }
